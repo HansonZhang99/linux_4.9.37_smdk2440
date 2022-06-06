@@ -108,7 +108,7 @@ static struct platform_device smdk_led7 = {
 };
 
 /* NAND parititon from 2.4.18-swl5 */
-
+#if 0
 static struct mtd_partition smdk_default_nand_part[] = {
 	[0] = {
 		.name	= "Boot Agent",
@@ -151,7 +151,40 @@ static struct mtd_partition smdk_default_nand_part[] = {
 		.size	= MTDPART_SIZ_FULL,
 	}
 };
-
+#else
+static struct mtd_partition smdk_default_nand_part[] = {
+	[0] = {
+		.name   = "mtdblock0 u-boot 1MB",
+		.size   = SZ_1M * 1,
+		.offset = 0,
+	},
+	[1] = {
+		.name   = "mtdblock1 kernel 15MB",
+		.offset = MTDPART_OFS_APPEND,
+		.size   = SZ_1M * 15,
+	},
+	[2] = {
+		.name   = "mtdblock2 rootfs 40MB",
+		.offset = MTDPART_OFS_APPEND,
+		.size   = SZ_1M * 40,
+	},
+	[3] = {
+		.name   = "mtdblock3 apps 80MB",
+		.offset = MTDPART_OFS_APPEND,
+		.size   = SZ_1M * 80,
+	},
+	[4] = {
+		.name   = "mtdblock4 data 80MB",
+		.offset = MTDPART_OFS_APPEND,
+		.size   = SZ_1M * 80,
+	},
+	[5] = {
+		.name   = "mtdblock5 backup 40MB",
+		.offset = MTDPART_OFS_APPEND,
+		.size   = SZ_1M * 40,
+	}
+};
+#endif
 static struct s3c2410_nand_set smdk_nand_sets[] = {
 	[0] = {
 		.name		= "NAND",
